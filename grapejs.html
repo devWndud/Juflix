@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juflix - GrapesJS Editor</title>
+  <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet"/>
+  <style>
+    body { margin: 0; background: #18191c; }
+    #gjs { min-height: 100vh; border: none; }
+    .gjs-pn-panel, .gjs-cv-canvas { font-family: 'Pretendard', 'Noto Sans KR', Arial, sans-serif; }
+    #save-btn {
+      position: fixed;
+      top: 18px;
+      right: 32px;
+      z-index: 9999;
+      background: #232427;
+      color: #ededed;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 0.7rem 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px 0 rgba(0,0,0,0.08);
+      transition: background 0.15s, color 0.15s;
+    }
+    #save-btn:hover {
+      background: #ededed;
+      color: #232427;
+    }
+  </style>
+</head>
+<body>
+  <button id="save-btn">index.html로 저장</button>
+  <div id="gjs"></div>
+  <script src="https://unpkg.com/grapesjs"></script>
+  <script>
+    const html = `<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Juflix</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n  <link href=\"https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css\" rel=\"stylesheet\">\n</head>\n<body>\n  <nav class=\"navbar\">\n    <div class=\"logo\">Juflix</div>\n    <ul class=\"nav-links\">\n      <li><a href=\"#\">홈</a></li>\n      <li><a href=\"#\">영화</a></li>\n    </ul>\n    <div class=\"nav-actions\">\n      <button class=\"login-btn\">로그인</button>\n      <button class=\"signup-btn\">회원가입</button>\n    </div>\n  </nav>\n  <header class=\"banner\">\n    <div class=\"banner-content\">\n      <div class=\"banner-tags\">\n        <span class=\"tag\">#스릴러</span>\n        <span class=\"tag\">#미스터리</span>\n        <span class=\"tag\">평점 4.8★</span>\n      </div>\n      <h1>오늘의 추천작<br><span class=\"highlight\">Purple Night</span></h1>\n      <p class=\"banner-desc\">보랏빛 밤, 당신을 사로잡을 미스터리 스릴러. <br>2024년 최고의 기대작을 지금 만나보세요.</p>\n      <div class=\"banner-buttons\">\n        <button class=\"play-btn\">재생</button>\n        <button class=\"info-btn\">상세 정보</button>\n      </div>\n    </div>\n  </header>\n  <main>\n    <section class=\"movie-row\">\n      <div class=\"section-header\">\n        <h2>🔥 인기 콘텐츠</h2>\n        <p class=\"section-desc\">지금 가장 인기 있는 영화들을 만나보세요.</p>\n      </div>\n      <div class=\"movie-list\">\n        <div class=\"movie-card\">\n          <img src=\"https://via.placeholder.com/200x280/6c47ff/ffffff?text=Movie+1\" alt=\"Movie 1\">\n          <div class=\"movie-info\">\n            <span class=\"mini-tag\">#액션</span>\n            <span class=\"mini-rating\">4.7★</span>\n          </div>\n          <div class=\"movie-title\">Movie 1</div>\n        </div>\n        <div class=\"movie-card\">\n          <img src=\"https://via.placeholder.com/200x280/6c47ff/ffffff?text=Movie+2\" alt=\"Movie 2\">\n          <div class=\"movie-info\">\n            <span class=\"mini-tag\">#로맨스</span>\n            <span class=\"mini-rating\">4.5★</span>\n          </div>\n          <div class=\"movie-title\">Movie 2</div>\n        </div>\n        <div class=\"movie-card\">\n          <img src=\"https://via.placeholder.com/200x280/6c47ff/ffffff?text=Movie+3\" alt=\"Movie 3\">\n          <div class=\"movie-info\">\n            <span class=\"mini-tag\">#코미디</span>\n            <span class=\"mini-rating\">4.6★</span>\n          </div>\n          <div class=\"movie-title\">Movie 3</div>\n        </div>\n        <div class=\"movie-card\">\n          <img src=\"https://via.placeholder.com/200x280/6c47ff/ffffff?text=Movie+4\" alt=\"Movie 4\">\n          <div class=\"movie-info\">\n            <span class=\"mini-tag\">#SF</span>\n            <span class=\"mini-rating\">4.8★</span>\n          </div>\n          <div class=\"movie-title\">Movie 4</div>\n        </div>\n      </div>\n    </section>\n    <section class=\"movie-row\">\n      <div class=\"section-header\">\n        <h2>🆕 새로 올라온 콘텐츠</h2>\n        <p class=\"section-desc\">따끈따끈한 신작을 바로 감상해보세요.</p>\n      </div>\n      <div class=\"movie-list\">\n        <div class=\"movie-card\">\n          <img src=\"https://via.placeholder.com/200x280/8a5cff/ffffff?text=Movie+5\" alt=\"Movie 5\">\n          <div class=\"movie-info\">\n            <span class=\"mini-tag\">#드라마</span>\n            <span class=\"mini-rating\">4.4★</span>\n          </div>\n          <div class=\"movie-title\">Movie 5</div>\n        </div>\n        <div class=\"movie-card\">\n          <img src=\"https://via.placeholder.com/200x280/8a5cff/ffffff?text=Movie+6\" alt=\"Movie 6\">\n          <div class=\"movie-info\">\n            <span class=\"mini-tag\">#애니메이션</span>\n            <span class=\"mini-rating\">4.3★</span>\n          </div>\n          <div class=\"movie-title\">Movie 6</div>\n        </div>\n        <div class=\"movie-card\">\n          <img src=\"https://via.placeholder.com/200x280/8a5cff/ffffff?text=Movie+7\" alt=\"Movie 7\">\n          <div class=\"movie-info\">\n            <span class=\"mini-tag\">#공포</span>\n            <span class=\"mini-rating\">4.1★</span>\n          </div>\n          <div class=\"movie-title\">Movie 7</div>\n        </div>\n        <div class=\"movie-card\">\n          <img src=\"https://via.placeholder.com/200x280/8a5cff/ffffff?text=Movie+8\" alt=\"Movie 8\">\n          <div class=\"movie-info\">\n            <span class=\"mini-tag\">#다큐</span>\n            <span class=\"mini-rating\">4.2★</span>\n          </div>\n          <div class=\"movie-title\">Movie 8</div>\n        </div>\n      </div>\n    </section>\n  </main>\n</body>\n</html>`;
+    const editor = grapesjs.init({
+      container: '#gjs',
+      fromElement: false,
+      height: '100vh',
+      width: 'auto',
+      storageManager: false,
+      components: html,
+      style: '',
+      i18n: {
+        locale: 'ko',
+        messages: { ko: {
+          styleManager: { empty: '스타일을 선택하세요' },
+          traitManager: { empty: '선택된 요소가 없습니다' },
+          assetManager: { addButton: '이미지 추가', inputPlh: 'http://경로/이미지.jpg', modalTitle: '이미지 선택', uploadTitle: '여기로 파일을 드래그하거나 클릭하세요' },
+        }}
+      },
+      panels: { defaults: [] },
+    });
+
+    document.getElementById('save-btn').onclick = function() {
+      const html = editor.getHtml();
+      const css = editor.getCss();
+      const full = `<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>Juflix</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n  <link href=\"https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css\" rel=\"stylesheet\">\n</head>\n<body>\n${html}\n<style>\n${css}\n</style>\n</body>\n</html>`;
+      const blob = new Blob([full], {type: 'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'index.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+      alert('index.html로 저장되었습니다!');
+    };
+  </script>
+</body>
+</html>

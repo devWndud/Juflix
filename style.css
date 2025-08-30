@@ -1,0 +1,638 @@
+:root {
+  --color-bg: #18191c;
+  --color-bg-light: #232427;
+  --color-primary: #ededed;
+  --color-primary-light: #f5f5f5;
+  --color-accent: #bdbdbd;
+  --color-white: #fff;
+  --color-gray: #8a8a8a;
+  --color-tag: #232427;
+  --color-rating: #ffd600;
+}
+
+body {
+  margin: 0;
+  font-family: 'Pretendard', 'Noto Sans KR', Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-primary);
+  letter-spacing: -0.01em;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3.5rem 1.5rem 3.5rem;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-bg-light);
+  box-shadow: none;
+}
+.logo {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: -0.03em;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2.2rem;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 1.13rem;
+  font-weight: 500;
+  padding: 0.2rem 0.7rem;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.nav-links a:hover {
+  background: var(--color-bg-light);
+}
+.nav-actions {
+  display: flex;
+  gap: 1rem;
+}
+.login-btn, .signup-btn {
+  background: none;
+  border: 1.5px solid var(--color-accent);
+  color: var(--color-primary);
+  font-size: 1.08rem;
+  font-weight: 700;
+  padding: 0.5rem 1.3rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+}
+.login-btn:hover, .signup-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  border: 1.5px solid var(--color-primary);
+}
+
+.banner {
+  background: var(--color-bg-light);
+  color: var(--color-primary);
+  padding: 4.5rem 3.5rem 3.5rem 3.5rem;
+  display: flex;
+  align-items: flex-start;
+  min-height: 260px;
+  border-radius: 0 0 32px 32px;
+  box-shadow: none;
+}
+.banner-content {
+  max-width: 700px;
+}
+.banner-tags {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 1.1rem;
+}
+.tag {
+  background: var(--color-tag);
+  color: var(--color-gray);
+  font-size: 0.98rem;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 0.22em 0.9em;
+  letter-spacing: -0.01em;
+  display: inline-block;
+}
+.banner .tag:last-child {
+  color: var(--color-rating);
+  background: transparent;
+  font-weight: 700;
+}
+.banner h1 {
+  font-size: 2.9rem;
+  font-weight: 900;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+.banner .highlight {
+  color: var(--color-accent);
+}
+.banner-desc {
+  font-size: 1.18rem;
+  margin-bottom: 2.1rem;
+  color: var(--color-gray);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.banner-buttons {
+  display: flex;
+  gap: 1.1rem;
+}
+.play-btn, .info-btn {
+  background: var(--color-primary);
+  border: none;
+  color: var(--color-bg);
+  padding: 0.85rem 2.1rem;
+  border-radius: 8px;
+  font-size: 1.13rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  box-shadow: none;
+}
+.play-btn:hover, .info-btn:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+main {
+  margin-top: 2.5rem;
+}
+.section-header {
+  margin-bottom: 1.2rem;
+}
+.section-header h2 {
+  margin: 0 0 0.3rem 0;
+  color: var(--color-primary);
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.section-desc {
+  color: var(--color-gray);
+  font-size: 1.05rem;
+  margin: 0;
+  font-weight: 500;
+}
+.movie-row {
+  margin: 0 0 3.5rem 0;
+  padding: 0 3.5rem;
+}
+.movie-list {
+  display: flex;
+  gap: 1.7rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+.movie-card {
+  background: var(--color-bg-light);
+  border-radius: 14px;
+  overflow: hidden;
+  min-width: 200px;
+  width: 200px;
+  box-shadow: none;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  flex: 0 0 auto;
+  border: 1.5px solid var(--color-bg-light);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.movie-card:hover {
+  background: var(--color-primary-light);
+  transform: translateY(-5px) scale(1.04);
+  box-shadow: 0 4px 24px 0 rgba(100,100,100,0.10);
+}
+.movie-card img {
+  width: 100%;
+  aspect-ratio: 5/7;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+.movie-info {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0.7rem 0 0.2rem 1rem;
+}
+.mini-tag {
+  background: var(--color-tag);
+  color: var(--color-gray);
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 0.13em 0.7em;
+  letter-spacing: -0.01em;
+  display: inline-block;
+}
+.mini-rating {
+  color: var(--color-rating);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-left: 0.2em;
+}
+.movie-title {
+  padding: 0.5rem 1rem 1.1rem 1rem;
+  font-size: 1.08rem;
+  color: var(--color-primary);
+  text-align: left;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* 검색바 wrap */
+.searchbar-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: var(--color-bg);
+  padding: 2rem 0 1.2rem 0;
+  border-bottom: 1px solid var(--color-bg-light);
+}
+.searchbar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--color-bg-light);
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  flex: 1 1 400px;
+  max-width: 600px;
+  min-width: 220px;
+}
+.search-input {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-size: 1.05rem;
+  flex: 1;
+  outline: none;
+  padding: 0.5rem 0.2rem;
+}
+.filter-select {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  border: 1px solid var(--color-bg-light);
+  border-radius: 6px;
+  font-size: 1rem;
+  padding: 0.3rem 0.7rem;
+}
+.search-btn {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.5rem 1.1rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.search-btn:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* 추천/찜한 영화 섹션 */
+.recommend-row, .wishlist-row {
+  margin: 0 0 3.5rem 0;
+  padding: 0 3.5rem;
+}
+.wishlist-list .empty {
+  background: none;
+  color: var(--color-gray);
+  border: none;
+  min-width: 180px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+}
+
+/* 찜하기 버튼 */
+.wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #bdbdbd;
+  font-size: 1.3rem;
+  cursor: pointer;
+  z-index: 2;
+  opacity: 0.7;
+  transition: color 0.15s, opacity 0.15s;
+}
+.wishlist-btn:hover {
+  color: #ff6b81;
+  opacity: 1;
+}
+.movie-card {
+  position: relative;
+}
+
+/* 리뷰/별점 UI */
+.review-ui {
+  margin: 0.5rem 1rem 1rem 1rem;
+  width: calc(100% - 2rem);
+}
+.stars {
+  color: #ffd600;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.05em;
+}
+.review-input {
+  width: 100%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-bg-light);
+  border-radius: 6px;
+  color: var(--color-primary);
+  font-size: 0.98rem;
+  padding: 0.4rem 0.7rem;
+  margin-top: 0.2rem;
+  outline: none;
+}
+.review-input::placeholder {
+  color: var(--color-gray);
+}
+
+/* 상세 모달 */
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(24,25,28,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+.modal-content {
+  background: var(--color-bg-light);
+  color: var(--color-primary);
+  border-radius: 16px;
+  padding: 2.5rem 2rem 2rem 2rem;
+  min-width: 320px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: none;
+  border: none;
+  color: var(--color-gray);
+  font-size: 2rem;
+  cursor: pointer;
+}
+.modal-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+.modal-meta {
+  color: var(--color-accent);
+  font-size: 1rem;
+  margin-bottom: 0.7rem;
+}
+.modal-desc {
+  margin-bottom: 1.2rem;
+  color: var(--color-primary);
+}
+.modal-trailer {
+  background: #111114;
+  color: var(--color-gray);
+  border-radius: 8px;
+  padding: 1.2rem;
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+.modal-review {
+  margin-top: 1.2rem;
+}
+.review-list {
+  margin-top: 0.5rem;
+}
+.review-item {
+  color: var(--color-primary);
+  font-size: 0.98rem;
+  margin-bottom: 0.2rem;
+}
+.review-user {
+  color: var(--color-accent);
+}
+
+/* 섹션 간 여백 */
+.section-gap {
+  margin-top: 3.5rem;
+  margin-bottom: 3.5rem;
+}
+
+/* 카드 레이아웃 개선 */
+.movie-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: var(--color-bg-light);
+  border-radius: 14px;
+  overflow: hidden;
+  min-width: 200px;
+  width: 200px;
+  box-shadow: none;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  flex: 0 0 auto;
+  border: 1.5px solid var(--color-bg-light);
+}
+.card-img-wrap {
+  width: 100%;
+  position: relative;
+  aspect-ratio: 5/7;
+  background: #222;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+}
+.wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #bdbdbd;
+  font-size: 1.3rem;
+  cursor: pointer;
+  z-index: 2;
+  opacity: 0.7;
+  transition: color 0.15s, opacity 0.15s;
+}
+.movie-card:hover .wishlist-btn,
+.wishlist-btn:focus {
+  color: #ff6b81;
+  opacity: 1;
+}
+
+/* 안내문구 강조 */
+.empty-msg {
+  color: var(--color-accent);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 2rem auto;
+  display: block;
+  text-align: center;
+}
+
+/* 스켈레톤 카드 비율 통일 */
+.skeleton, .skeleton-row .movie-card.skeleton {
+  background: linear-gradient(90deg, #232427 25%, #232427 50%, #18191c 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+  min-width: 200px;
+  width: 200px;
+  aspect-ratio: 5/7;
+  height: auto;
+  border-radius: 14px;
+  border: 1.5px solid var(--color-bg-light);
+}
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 섹션 구분 */
+.section-header {
+  margin-bottom: 1.2rem;
+  border-left: 4px solid var(--color-accent);
+  padding-left: 1rem;
+}
+.section-header h2 {
+  margin: 0 0 0.3rem 0;
+  color: var(--color-primary);
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.section-desc {
+  color: var(--color-gray);
+  font-size: 1.05rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* 별점 폰트/색상 통일 */
+.stars {
+  color: #ffd600;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.05em;
+}
+
+/* 푸터 */
+.footer {
+  background: var(--color-bg-light);
+  color: var(--color-gray);
+  padding: 2.5rem 0 1.5rem 0;
+  margin-top: 4rem;
+}
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+.footer-logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  padding: 0;
+  margin: 0 0 0.5rem 0;
+}
+.footer-links a {
+  color: var(--color-gray);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.15s;
+}
+.footer-links a:hover {
+  color: var(--color-primary);
+}
+.footer-copy {
+  font-size: 0.95rem;
+  color: var(--color-accent);
+}
+
+/* 반응형 개선 */
+@media (max-width: 1100px) {
+  .navbar, .banner, .movie-row, .recommend-row, .wishlist-row, .skeleton-row {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+  .banner {
+    min-height: 180px;
+    border-radius: 0 0 18px 18px;
+  }
+  .movie-card, .card-img-wrap, .skeleton {
+    min-width: 140px;
+    width: 140px;
+  }
+}
+@media (max-width: 700px) {
+  .navbar {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.7rem 0.7rem;
+  }
+  .nav-links {
+    gap: 0.7rem;
+  }
+  .searchbar-wrap {
+    padding: 1rem 0 0.5rem 0;
+  }
+  .searchbar {
+    margin-left: 0;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.4rem 0.7rem;
+    max-width: 100%;
+  }
+  .banner h1 {
+    font-size: 1.4rem;
+  }
+  .banner {
+    padding: 1.5rem 0.7rem 1.2rem 0.7rem;
+    min-height: 100px;
+    border-radius: 0 0 10px 10px;
+  }
+  .movie-row, .recommend-row, .wishlist-row, .skeleton-row {
+    padding: 0 0.5rem;
+  }
+  .movie-list {
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+  .movie-card, .card-img-wrap, .skeleton {
+    min-width: 90px;
+    width: 90px;
+  }
+  .movie-title {
+    font-size: 0.9rem;
+  }
+  .footer-content {
+    gap: 0.7rem;
+  }
+  .footer-links {
+    gap: 0.7rem;
+  }
+}
