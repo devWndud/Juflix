@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juflix GrapesJS Editor</title>
+  
+  <!-- GrapesJS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
+  
+  <!-- Pretendard Font -->
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Pretendard', sans-serif;
+      background: #f5f5f5;
+    }
+    
+    .header {
+      background: #333;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    
+    .header-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    
+    .btn:hover {
+      background: #0056b3;
+    }
+    
+    .btn-secondary {
+      background: #6c757d;
+    }
+    
+    .btn-secondary:hover {
+      background: #545b62;
+    }
+    
+    .css-editor-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+    }
+    
+    .css-editor-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+    
+    .css-editor-content h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    .css-textarea {
+      width: 100%;
+      height: 400px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1rem;
+      resize: vertical;
+    }
+    
+    .css-editor-buttons {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .close-modal:hover {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎬 Juflix GrapesJS Editor</h1>
+    <div class="header-buttons">
+      <button class="btn" onclick="openCssEditor()">CSS 편집</button>
+      <button class="btn btn-secondary" onclick="saveAsIndexHtml()">index.html로 저장</button>
+      <button class="btn btn-secondary" onclick="saveAsStyleCss()">style.css로 저장</button>
+    </div>
+  </div>
+
+  <!-- GrapesJS Editor Container -->
+  <div id="gjs"></div>
+
+  <!-- CSS Editor Modal -->
+  <div class="css-editor-modal" id="cssEditorModal">
+    <div class="css-editor-content">
+      <button class="close-modal" onclick="closeCssEditor()">×</button>
+      <h3>CSS 편집</h3>
+      <textarea class="css-textarea" id="cssEditor" placeholder="CSS 코드를 입력하세요..."></textarea>
+      <div class="css-editor-buttons">
+        <button class="btn btn-secondary" onclick="closeCssEditor()">취소</button>
+        <button class="btn" onclick="applyCss()">적용</button>
+        <button class="btn btn-secondary" onclick="saveAsStyleCss()">style.css로 다운로드</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GrapesJS JS -->
+  <script src="https://unpkg.com/grapesjs/dist/grapes.min.js"></script>
+  
+  <script>
+    // 기본 HTML (Juflix 사이트 전체)
+    const html = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juflix</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Juflix</div>
+    <div class="nav-actions">
+      <button class="login-btn">로그인</button>
+      <button class="signup-btn">회원가입</button>
+    </div>
+  </nav>
+  <div class="searchbar-wrap">
+    <form class="searchbar">
+      <input type="text" placeholder="영화 제목, 배우, 감독 검색" class="search-input" />
+      <select class="filter-select"><option>장르</option><option>액션</option><option>로맨스</option><option>코미디</option><option>SF</option></select>
+      <select class="filter-select"><option>정렬</option><option>최신순</option><option>평점순</option><option>인기순</option></select>
+      <button type="submit" class="search-btn">검색</button>
+    </form>
+  </div>
+  <header class="banner">
+    <div class="banner-content">
+      <div class="banner-tags">
+        <span class="tag">#스릴러</span>
+        <span class="tag">#미스터리</span>
+        <span class="tag">평점 4.8★</span>
+      </div>
+      <h1>오늘의 추천작<br><span class="highlight">Purple Night</span></h1>
+      <p class="banner-desc">보랏빛 밤, 당신을 사로잡을 미스터리 스릴러. <br>2024년 최고의 기대작을 지금 만나보세요.</p>
+      <div class="banner-buttons">
+        <button class="play-btn">재생</button>
+        <button class="info-btn">상세 정보</button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="recommend-row section-gap">
+      <div class="section-header">
+        <h2>✨ 당신을 위한 추천</h2>
+        <p class="section-desc">취향에 맞는 영화를 골라봤어요.</p>
+      </div>
+      <div class="movie-list">
+        <div class="movie-card skeleton"></div>
+        <div class="movie-card skeleton"></div>
+        <div class="movie-card skeleton"></div>
+        <div class="movie-card skeleton"></div>
+      </div>
+    </section>
+    <section class="wishlist-row section-gap">
+      <div class="section-header">
+        <h2>♥ 찜한 영화</h2>
+        <p class="section-desc">내가 찜한 영화들을 한눈에!</p>
+      </div>
+      <div class="movie-list wishlist-list">
+        <div class="movie-card empty"><span class="empty-msg">아직 찜한 영화가 없습니다.</span></div>
+      </div>
+    </section>
+    <section class="movie-row section-gap">
+      <div class="section-header">
+        <h2>🔥 인기 콘텐츠</h2>
+        <p class="section-desc">지금 가장 인기 있는 영화들을 만나보세요.</p>
+      </div>
+      <div class="movie-list">
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="images/poster1.png" alt="Movie 1">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#액션</span>
+            <span class="mini-rating">4.7★</span>
+          </div>
+          <div class="movie-title">Movie 1</div>
+          <div class="review-ui">
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="images/poster2.png" alt="Movie 2">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#로맨스</span>
+            <span class="mini-rating">4.5★</span>
+          </div>
+          <div class="movie-title">Movie 2</div>
+          <div class="review-ui">
+            <div class="stars">★★★★☆</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="images/poster3.png" alt="Movie 3">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#코미디</span>
+            <span class="mini-rating">4.6★</span>
+          </div>
+          <div class="movie-title">Movie 3</div>
+          <div class="review-ui">
+            <div class="stars">★★★☆☆</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="images/poster4.png" alt="Movie 4">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#SF</span>
+            <span class="mini-rating">4.8★</span>
+          </div>
+          <div class="movie-title">Movie 4</div>
+          <div class="review-ui">
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="movie-row section-gap">
+      <div class="section-header">
+        <h2>🆕 새로 올라온 콘텐츠</h2>
+        <p class="section-desc">따끈따끈한 신작을 바로 감상해보세요.</p>
+      </div>
+      <div class="movie-list">
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="images/poster5.png" alt="Movie 5">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#드라마</span>
+            <span class="mini-rating">4.4★</span>
+          </div>
+          <div class="movie-title">Movie 5</div>
+          <div class="review-ui">
+            <div class="stars">★★★☆☆</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="images/poster6.png" alt="Movie 6">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#애니메이션</span>
+            <span class="mini-rating">4.3★</span>
+          </div>
+          <div class="movie-title">Movie 6</div>
+          <div class="review-ui">
+            <div class="stars">★★★★☆</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="images/poster7.png" alt="Movie 7">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#공포</span>
+            <span class="mini-rating">4.1★</span>
+          </div>
+          <div class="movie-title">Movie 7</div>
+          <div class="review-ui">
+            <div class="stars">★★☆☆☆</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="images/poster8.png" alt="Movie 8">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#다큐</span>
+            <span class="mini-rating">4.2★</span>
+          </div>
+          <div class="movie-title">Movie 8</div>
+          <div class="review-ui">
+            <div class="stars">★★★☆☆</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 상세 정보 모달 (UI만, JS 없이 숨김 처리, display:block 예시) -->
+    <div class="modal detail-modal" style="display:block;">
+      <div class="modal-content">
+        <button class="modal-close">×</button>
+        <h2>영화 제목</h2>
+        <div class="modal-tags">
+          <span class="tag">#장르</span>
+          <span class="tag">#감독</span>
+        </div>
+        <div class="modal-meta">2024 · 120분 · 15세이상관람가</div>
+        <div class="modal-desc">여기에 영화 줄거리, 감독, 출연진, 예고편 영상 등이 들어갑니다.</div>
+        <div class="modal-trailer">[예고편 영상 자리]</div>
+        <div class="modal-review">
+          <div class="stars">★★★★☆</div>
+          <div class="review-list">
+            <div class="review-item">재밌어요! - <span class="review-user">user1</span></div>
+            <div class="review-item">최고의 영화! - <span class="review-user">user2</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">Juflix</div>
+      <ul class="footer-links">
+        <li><a href="#">회사소개</a></li>
+        <li><a href="#">이용약관</a></li>
+        <li><a href="#">개인정보처리방침</a></li>
+        <li><a href="#">고객센터</a></li>
+      </ul>
+      <div class="footer-copy">© 2024 Juflix. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    document.querySelectorAll('.modal-close').forEach(btn => {
+      btn.onclick = function() {
+        this.closest('.modal').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>`;
+
+    // 기본 CSS 로드
+    let customCss = '';
+    
+    // GrapesJS 에디터 초기화
+    const editor = grapesjs.init({
+      container: '#gjs',
+      height: '100vh',
+      storageManager: false,
+      panels: {
+        defaults: [
+          {
+            id: 'basic-actions',
+            el: '.panel__basic-actions',
+            buttons: [
+              {
+                id: 'visibility',
+                active: true,
+                className: 'btn-toggle-borders',
+                label: '<u>B</u>',
+                command: 'sw-visibility',
+              },
+              {
+                id: 'export',
+                className: 'btn-open-export',
+                label: 'Exp',
+                command: 'export-template',
+                context: 'export-template',
+              },
+              {
+                id: 'show-json',
+                className: 'btn-show-json',
+                label: 'JSON',
+                action: 'show-json',
+              },
+            ],
+          },
+        ],
+      },
+      deviceManager: {
+        devices: [
+          {
+            name: 'Desktop',
+            width: '',
+          },
+          {
+            name: 'Tablet',
+            width: '768px',
+            widthMedia: '992px',
+          },
+          {
+            name: 'Mobile',
+            width: '320px',
+            widthMedia: '480px',
+          },
+        ],
+      },
+      plugins: ['gjs-preset-webpage'],
+      pluginsOpts: {
+        'gjs-preset-webpage': {},
+      },
+    });
+
+    // 기본 HTML 로드
+    editor.setComponents(html);
+
+    // CSS 편집기 열기
+    function openCssEditor() {
+      document.getElementById('cssEditorModal').style.display = 'block';
+      // 현재 CSS 가져오기
+      const currentCss = editor.getCss();
+      document.getElementById('cssEditor').value = currentCss;
+    }
+
+    // CSS 편집기 닫기
+    function closeCssEditor() {
+      document.getElementById('cssEditorModal').style.display = 'none';
+    }
+
+    // CSS 적용
+    function applyCss() {
+      const css = document.getElementById('cssEditor').value;
+      editor.setCss(css);
+      customCss = css;
+    }
+
+    // index.html로 저장
+    function saveAsIndexHtml() {
+      const html = editor.getHtml();
+      const css = editor.getCss();
+      
+      // CSS를 <style> 태그로 포함한 완전한 HTML
+      const fullHtml = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juflix</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <style>
+${css}
+  </style>
+</head>
+${html}
+</html>`;
+      
+      downloadFile(fullHtml, 'index.html', 'text/html');
+    }
+
+    // style.css로 저장
+    function saveAsStyleCss() {
+      const css = editor.getCss();
+      downloadFile(css, 'style.css', 'text/css');
+    }
+
+    // 파일 다운로드 함수
+    function downloadFile(content, filename, contentType) {
+      const blob = new Blob([content], { type: contentType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // 모달 외부 클릭 시 닫기
+    window.onclick = function(event) {
+      const modal = document.getElementById('cssEditorModal');
+      if (event.target === modal) {
+        closeCssEditor();
+      }
+    }
+  </script>
+</body>
+</html>

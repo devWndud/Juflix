@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juflix</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Juflix</div>
+    <div class="nav-actions">
+      <button class="login-btn">로그인</button>
+      <button class="signup-btn">회원가입</button>
+    </div>
+  </nav>
+  <div class="searchbar-wrap">
+    <form class="searchbar">
+      <input type="text" placeholder="영화 제목, 배우, 감독 검색" class="search-input" />
+      <select class="filter-select"><option>장르</option><option>액션</option><option>로맨스</option><option>코미디</option><option>SF</option></select>
+      <select class="filter-select"><option>정렬</option><option>최신순</option><option>평점순</option><option>인기순</option></select>
+      <button type="submit" class="search-btn">검색</button>
+    </form>
+  </div>
+  <header class="banner">
+    <div class="banner-content">
+      <div class="banner-tags">
+        <span class="tag">#스릴러</span>
+        <span class="tag">#미스터리</span>
+        <span class="tag">평점 4.8★</span>
+      </div>
+      <h1>오늘의 추천작<br><span class="highlight">Purple Night</span></h1>
+      <p class="banner-desc">보랏빛 밤, 당신을 사로잡을 미스터리 스릴러. <br>2024년 최고의 기대작을 지금 만나보세요.</p>
+      <div class="banner-buttons">
+        <button class="play-btn">재생</button>
+        <button class="info-btn">상세 정보</button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="recommend-row section-gap">
+      <div class="section-header">
+        <h2>✨ 당신을 위한 추천</h2>
+        <p class="section-desc">취향에 맞는 영화를 골라봤어요.</p>
+      </div>
+      <div class="movie-list">
+        <div class="movie-card skeleton"></div>
+        <div class="movie-card skeleton"></div>
+        <div class="movie-card skeleton"></div>
+        <div class="movie-card skeleton"></div>
+      </div>
+    </section>
+    <section class="wishlist-row section-gap">
+      <div class="section-header">
+        <h2>♥ 찜한 영화</h2>
+        <p class="section-desc">내가 찜한 영화들을 한눈에!</p>
+      </div>
+      <div class="movie-list wishlist-list">
+        <div class="movie-card empty"><span class="empty-msg">아직 찜한 영화가 없습니다.</span></div>
+      </div>
+    </section>
+    <section class="movie-row section-gap">
+      <div class="section-header">
+        <h2>🔥 인기 콘텐츠</h2>
+        <p class="section-desc">지금 가장 인기 있는 영화들을 만나보세요.</p>
+      </div>
+      <div class="movie-list">
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename='images/poster1.png') }}" alt="Movie 1">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#액션</span>
+            <span class="mini-rating">4.7★</span>
+          </div>
+          <div class="movie-title">Movie 1</div>
+          <div class="review-ui">
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename='images/poster2.png') }}" alt="Movie 2">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#로맨스</span>
+            <span class="mini-rating">4.5★</span>
+          </div>
+          <div class="movie-title">Movie 2</div>
+          <div class="review-ui">
+            <div class="stars">★★★★☆</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename='images/poster3.png') }}" alt="Movie 3">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#코미디</span>
+            <span class="mini-rating">4.6★</span>
+          </div>
+          <div class="movie-title">Movie 3</div>
+          <div class="review-ui">
+            <div class="stars">★★★☆☆</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename='images/poster4.png') }}" alt="Movie 4">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#SF</span>
+            <span class="mini-rating">4.8★</span>
+          </div>
+          <div class="movie-title">Movie 4</div>
+          <div class="review-ui">
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="movie-row section-gap">
+      <div class="section-header">
+        <h2>🆕 새로 올라온 콘텐츠</h2>
+        <p class="section-desc">따끈따끈한 신작을 바로 감상해보세요.</p>
+      </div>
+      <div class="movie-list">
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename='images/poster5.png') }}" alt="Movie 5">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#드라마</span>
+            <span class="mini-rating">4.4★</span>
+          </div>
+          <div class="movie-title">Movie 5</div>
+          <div class="review-ui">
+            <div class="stars">★★★☆☆</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename='images/poster6.png') }}" alt="Movie 6">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#애니메이션</span>
+            <span class="mini-rating">4.3★</span>
+          </div>
+          <div class="movie-title">Movie 6</div>
+          <div class="review-ui">
+            <div class="stars">★★★★☆</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename='images/poster7.png') }}" alt="Movie 7">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#공포</span>
+            <span class="mini-rating">4.1★</span>
+          </div>
+          <div class="movie-title">Movie 7</div>
+          <div class="review-ui">
+            <div class="stars">★★☆☆☆</div>
+          </div>
+        </div>
+        <div class="movie-card" tabindex="0">
+          <div class="card-img-wrap">
+            <img src="{{ url_for('static', filename='images/poster8.png') }}" alt="Movie 8">
+            <button class="wishlist-btn" title="찜하기">♥</button>
+          </div>
+          <div class="movie-info">
+            <span class="mini-tag">#다큐</span>
+            <span class="mini-rating">4.2★</span>
+          </div>
+          <div class="movie-title">Movie 8</div>
+          <div class="review-ui">
+            <div class="stars">★★★☆☆</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 상세 정보 모달 (UI만, JS 없이 숨김 처리, display:block 예시) -->
+    <div class="modal detail-modal" style="display:block;">
+      <div class="modal-content">
+        <button class="modal-close">×</button>
+        <h2>영화 제목</h2>
+        <div class="modal-tags">
+          <span class="tag">#장르</span>
+          <span class="tag">#감독</span>
+        </div>
+        <div class="modal-meta">2024 · 120분 · 15세이상관람가</div>
+        <div class="modal-desc">여기에 영화 줄거리, 감독, 출연진, 예고편 영상 등이 들어갑니다.</div>
+        <div class="modal-trailer">[예고편 영상 자리]</div>
+        <div class="modal-review">
+          <div class="stars">★★★★☆</div>
+          <div class="review-list">
+            <div class="review-item">재밌어요! - <span class="review-user">user1</span></div>
+            <div class="review-item">최고의 영화! - <span class="review-user">user2</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">Juflix</div>
+      <ul class="footer-links">
+        <li><a href="#">회사소개</a></li>
+        <li><a href="#">이용약관</a></li>
+        <li><a href="#">개인정보처리방침</a></li>
+        <li><a href="#">고객센터</a></li>
+      </ul>
+      <div class="footer-copy">© 2024 Juflix. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    document.querySelectorAll('.modal-close').forEach(btn => {
+      btn.onclick = function() {
+        this.closest('.modal').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
